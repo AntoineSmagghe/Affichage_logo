@@ -6,11 +6,11 @@ for ($i = 0; $i < count($link); $i++){
     
     ob_start();
     include "index.php";
-    $conent = ob_get_clean();
+    $content = ob_get_clean();
 
     mkdir("emailings/" . $link[$i]["name"]);
     mkdir("emailings/" . $link[$i]["name"] . "/img");
-    file_put_contents("emailings/" . $link[$i]['name'] . "/Emailing_01" . $link[$i]["name"] . ".html", $content);
+    file_put_contents("emailings/" . $link[$i]['name'] . "/Emailing_01_" . $link[$i]["name"] . ".html", $content);
 
 }
 
