@@ -2,9 +2,9 @@
 #logos{
     display: flex;
     flex-wrap: wrap;
-    width: 1113px;
+    width: 1055px;
     margin: auto;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .logo{
