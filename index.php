@@ -21,14 +21,14 @@
 
 <?php
 try{
-    $directory = shell_exec('dir /b');
+    $directory = shell_exec('ls');
     $filepath = explode("\n", $directory);
     
     if (($key = array_search("index.php", $filepath)) !== false){
         unset($filepath[$key]);
     };
     
-    $output = array_values($filepath);
+    $output = array_filter(array_values($filepath));
 }catch(Exception $e){
     echo $e;
 }
@@ -41,19 +41,20 @@ try{
     <title>Document</title>
 </head>
 <body>
-    <?php echo "<pre>LISTE DES LOGOS : " . print_r(array_filter($output), true) . "</pre>"; ?>
+    <?php echo "<pre>LISTE DES LOGOS : " . print_r($output, true) . "</pre>"; ?>
 
     <section id="logos">
-        <?php for ($i = 0; $i < (count($output) - 1); $i++){ ?>
+        <?php foreach($output as $path) {
+        /*for ($i = 0; $i < (count($output) - 1); $i++){*/ ?>
         <!--div class="logo_container"-->
-            <img src="<?= $output[$i] ?>" class="logo">
+            <img src="<?= $path ?>" class="logo">
         <!--/div-->
         <?php } ?>
     </section>
     <script>
         var elements = document.querySelectorAll(".logo_container");
         
-        for (let i = 0; i < elements.length; i++){
+        for (let i = 0, element; element = elements[i]; i++){
             //create box in bottom-left
             var resizer = document.createElement('div');
             resizer.class = "resizerElt";
@@ -65,7 +66,7 @@ try{
             resizer.style.bottom = 0;
             resizer.style.cursor = 'se-resize';
             //Append Child to Element
-            elements[i].appendChild(resizer);
+            element.appendChild(resizer);
             //box function onmousemove
             resizer.addEventListener('mousedown', initResize, false);
 
@@ -77,8 +78,8 @@ try{
 
             //resize the element
             function Resize(e) {
-                elements[i].style.width = (e.clientX - elements[i].offsetLeft) + 'px';
-                elements[i].style.height = (e.clientY - elements[i].offsetTop) + 'px';
+                element.style.width = (e.clientX - element.offsetLeft) + 'px';
+                element.style.height = (e.clientY - element.offsetTop) + 'px';
             }
             
             //on mouseup remove windows functions mousemove & mouseup
