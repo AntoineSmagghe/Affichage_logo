@@ -1,57 +1,63 @@
-<style>
-#logos{
-    display: flex;
-    flex-wrap: wrap;
-    width: 1055px;
-    margin: auto;
-    justify-content: space-around;
-}
-
-.logo_container{
-}
-
-.logo{
-    width: 228px;
-    max-height: 110px;
-    object-fit: scale-down;
-    padding: 15px;  
-    margin: auto 0;
-}
-</style>
-
 <?php
-try{
+try {
     $directory = shell_exec('ls');
     $filepath = explode("\n", $directory);
-    
-    if (($key = array_search("index.php", $filepath)) !== false){
+
+    if (($key = array_search("index.php", $filepath)) !== false) {
         unset($filepath[$key]);
     };
-    
+
     $output = array_filter(array_values($filepath));
-}catch(Exception $e){
+} catch (Exception $e) {
     echo $e;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #logos {
+            display: flex;
+            flex-wrap: wrap;
+            width: 1055px;
+            margin: auto;
+            justify-content: space-around;
+        }
+
+        .logo_container {
+            width: 228px;
+            height: 110px;
+            margin: auto 0;
+            padding: 15px;
+            object-fit: contain;
+            border: 1px solid silver;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            max-width: 100%;
+            max-height: 110px;
+            object-fit: scale-down;
+        }
+    </style>
 </head>
 <body>
     <?php echo "<pre>LISTE DES LOGOS : " . print_r($output, true) . "</pre>"; ?>
 
     <section id="logos">
-        <?php foreach($output as $path) {
-        /*for ($i = 0; $i < (count($output) - 1); $i++){*/ ?>
-        <!--div class="logo_container"-->
-            <img src="<?= $path ?>" class="logo">
-        <!--/div-->
+        <?php foreach ($output as $path) { ?>
+            <div class="logo_container">
+                <img src="<?= $path ?>" class="logo">
+            </div>
         <?php } ?>
     </section>
-    <script>
+    <!--script>
         var elements = document.querySelectorAll(".logo_container");
         
         for (let i = 0, element; element = elements[i]; i++){
@@ -88,9 +94,7 @@ try{
                 window.removeEventListener('mouseup', stopResize, false);
             }
         }
-    </script>
+    </script-->
 </body>
+
 </html>
-
-
-
