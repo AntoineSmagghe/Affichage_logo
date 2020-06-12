@@ -1,39 +1,20 @@
 <?php
 
+mkdir("emailings");
+
 include "links.php";
 
-for ($i = 0; $i < count($link); $i++){
-    
+foreach ($links as $link) {
     ob_start();
     include "index.php";
     $content = ob_get_clean();
 
-    mkdir("emailings/" . $link[$i]["name"]);
-    mkdir("emailings/" . $link[$i]["name"] . "/img");
-    file_put_contents("emailings/" . $link[$i]['name'] . "/Emailing_01_" . $link[$i]["name"] . ".html", $content);
-
+    mkdir("emailings/" . $link["filename"]);
+    mkdir("emailings/" . $link["filename"] . "/img");
+    copy("img/Logo_VIVHealthTech_White.png", "emailings/" . $link["filename"] . "/img/Logo_VIVHealthTech_White.png");
+    copy("img/Footer_Logos.png", "emailings/" . $link["filename"] . "/img/Footer_Logos.png");
+    copy($link["header_image"], "emailings/" . $link["filename"] . "/" . $link["header_image"]);
+    file_put_contents("emailings/" . $link['filename'] . "/Emailing_07_" . $link["filename"] . ".html", $content);
 }
 
 echo "Job is done!";
-
-
-/*
-class CreateMultipleFiles
-{
-    private $data;
-    private $templatePath;
-    
-    private function __construct($data, $templatePath){
-        $this->data = $data;
-        $this->templatePath = $templatePath;
-    }
-
-    public function builder(){
-        ob_start();
-        include $this->templatePath;
-        $conent = ob_get_clean();
-
-
-    }
-}
-*/
